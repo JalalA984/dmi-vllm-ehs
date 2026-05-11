@@ -1,0 +1,13 @@
+timestamp,mode,tag,model,num_prompts,max_num_seqs,max_tokens,hook_selection,null_mode,dtype,tp_size,seed,max_model_len,num_warmups,build_seconds,warmup_seconds,bench_seconds,total_prompt_tokens,total_gen_tokens,avg_prompt_len,prompts_per_s,prefill_tokens_per_s
+2026-05-03T21:18:24,vanilla,sweep_bs1,/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b,64,1,1,,,auto,1,42,4096,2,331.11,0.403,1.124,13868,64,216.7,56.944,12339.1
+2026-05-04T10:19:45,vanilla,sweep_bs1,/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b,64,1,1,,,auto,1,42,4096,2,221.86,0.388,1.090,13868,64,216.7,58.702,12719.9
+2026-05-04T11:29:16,vanilla,sweep_bs1,/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b,64,1,1,,,auto,1,42,4096,2,223.57,0.649,1.106,13868,64,216.7,57.871,12540.0
+2026-05-04T11:34:03,dmi,sweep_bs1,/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b,64,1,1,vllm-full,True,auto,1,42,4096,2,202.36,0.918,1.349,13868,64,216.7,47.426,10276.7
+2026-05-04T11:35:30,vanilla,sweep_bs4,/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b,64,4,1,,,auto,1,42,4096,2,53.10,0.624,0.769,13868,64,216.7,83.252,18039.7
+2026-05-04T11:38:37,dmi,sweep_bs4,/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b,64,4,1,vllm-full,True,auto,1,42,4096,2,145.90,0.669,0.805,13868,64,216.7,79.524,17231.9
+2026-05-04T11:40:29,vanilla,sweep_bs8,/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b,64,8,1,,,auto,1,42,4096,2,68.43,0.299,0.633,13868,64,216.7,101.063,21899.1
+2026-05-04T11:42:50,dmi,sweep_bs8,/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b,64,8,1,vllm-full,True,auto,1,42,4096,2,104.71,0.301,0.629,13868,64,216.7,101.732,22044.0
+2026-05-04T11:44:44,vanilla,sweep_bs16,/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b,64,16,1,,,auto,1,42,4096,2,69.59,0.502,0.561,13868,64,216.7,114.126,24729.8
+2026-05-04T11:47:36,dmi,sweep_bs16,/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b,64,16,1,vllm-full,True,auto,1,42,4096,2,121.46,0.452,0.568,13868,64,216.7,112.673,24414.8
+2026-05-04T11:49:10,vanilla,sweep_bs32,/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b,64,32,1,,,auto,1,42,4096,2,52.10,0.667,0.536,13868,64,216.7,119.450,25883.3
+2026-05-04T11:51:46,dmi,sweep_bs32,/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b,64,32,1,vllm-full,True,auto,1,42,4096,2,121.46,0.690,0.522,13868,64,216.7,122.567,26558.8

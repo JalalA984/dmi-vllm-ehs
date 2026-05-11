@@ -1,0 +1,397 @@
+=== node: gpu-b9-4.zaratan.umd.edu  job: 19203724  start: Mon May  4 11:22:46 EDT 2026 ===
+Loading cuda/12.3.0/gcc/11.3.0/zen2
+  Loading requirement: gcc/11.3.0
+Mon May  4 11:22:46 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 590.44.01              Driver Version: 590.44.01      CUDA Version: 13.1     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA A100-SXM4-40GB          On  |   00000000:01:00.0 Off |                    0 |
+| N/A   25C    P0             51W /  400W |       0MiB /  40960MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+
+/home/jahmad1/scratch.zaoxing-prj/miniconda3/envs/vllm-exp/bin/python
+Python 3.10.20
+MODEL_PATH=/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b
+-rw-r--r--. 1 jahmad1 zt-zaoxing-prj 3.7G May  2 21:33 /scratch/zt1/project/zaoxing-prj/shared/qwen3-4b/model-00001-of-00003.safetensors
+-rw-r--r--. 1 jahmad1 zt-zaoxing-prj 3.8G May  2 21:33 /scratch/zt1/project/zaoxing-prj/shared/qwen3-4b/model-00002-of-00003.safetensors
+-rw-r--r--. 1 jahmad1 zt-zaoxing-prj  96M May  2 21:24 /scratch/zt1/project/zaoxing-prj/shared/qwen3-4b/model-00003-of-00003.safetensors
+
+========== Sweep starts ==========
+Driver:  /home/jahmad1/scratch.zaoxing-prj/bench_offline.py
+Results: /home/jahmad1/scratch.zaoxing-prj/results.csv
+Batch sizes: 1 4 8 16 32
+Num prompts per run: 64
+
+---------- batch_size=1 : VANILLA ----------
+[bench_offline] start  mode=vanilla  model=/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b
+[bench_offline] num_prompts=64  max_num_seqs=1  max_tokens=1  warmups=2
+[bench_offline] building LLM ...
+INFO 05-04 11:25:54 [utils.py:238] non-default args: {'max_model_len': 4096, 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.85, 'max_num_seqs': 1, 'disable_log_stats': True, 'model': '/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b'}
+INFO 05-04 11:25:54 [model.py:531] Resolved architecture: Qwen3ForCausalLM
+INFO 05-04 11:25:54 [model.py:1554] Using max model len 4096
+INFO 05-04 11:25:59 [scheduler.py:231] Chunked prefill is enabled with max_num_batched_tokens=4096.
+INFO 05-04 11:25:59 [vllm.py:747] Asynchronous scheduling is enabled.
+(EngineCore_DP0 pid=1648228) INFO 05-04 11:26:28 [core.py:101] Initializing a V1 LLM engine (v0.17.0) with config: model='/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b', speculative_config=None, tokenizer='/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=0, served_model_name=/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [4096], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 2, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': True, 'static_all_moe_layers': []}
+(EngineCore_DP0 pid=1648228) INFO 05-04 11:26:54 [parallel_state.py:1393] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://10.102.35.4:60341 backend=nccl
+(EngineCore_DP0 pid=1648228) INFO 05-04 11:26:54 [parallel_state.py:1715] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(EngineCore_DP0 pid=1648228) INFO 05-04 11:26:57 [base.py:106] Offloader set to NoopOffloader
+(EngineCore_DP0 pid=1648228) INFO 05-04 11:26:58 [gpu_model_runner.py:4281] Starting to load model /scratch/zt1/project/zaoxing-prj/shared/qwen3-4b...
+(EngineCore_DP0 pid=1648228) INFO 05-04 11:27:12 [cuda.py:405] Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].
+(EngineCore_DP0 pid=1648228) INFO 05-04 11:27:12 [flash_attn.py:587] Using FlashAttention version 2
+(EngineCore_DP0 pid=1648228) INFO 05-04 11:27:30 [default_loader.py:293] Loading weights took 16.67 seconds
+(EngineCore_DP0 pid=1648228) INFO 05-04 11:27:31 [gpu_model_runner.py:4364] Model loading took 7.56 GiB memory and 32.608151 seconds
+(EngineCore_DP0 pid=1648228) INFO 05-04 11:28:34 [backends.py:914] vLLM's torch.compile cache is disabled.
+(EngineCore_DP0 pid=1648228) INFO 05-04 11:28:34 [backends.py:976] Dynamo bytecode transform time: 63.02 s
+(EngineCore_DP0 pid=1648228) INFO 05-04 11:29:09 [backends.py:366] Compiling a graph for compile range (1, 4096) takes 34.06 s
+(EngineCore_DP0 pid=1648228) INFO 05-04 11:29:09 [monitor.py:35] torch.compile takes 98.18 s in total
+(EngineCore_DP0 pid=1648228) INFO 05-04 11:29:10 [gpu_worker.py:424] Available KV cache memory: 25.03 GiB
+(EngineCore_DP0 pid=1648228) INFO 05-04 11:29:10 [kv_cache_utils.py:1314] GPU KV cache size: 182,240 tokens
+(EngineCore_DP0 pid=1648228) INFO 05-04 11:29:10 [kv_cache_utils.py:1319] Maximum concurrency for 4,096 tokens per request: 44.49x
+(EngineCore_DP0 pid=1648228) INFO 05-04 11:29:11 [gpu_model_runner.py:5386] Graph capturing finished in 1 secs, took 0.04 GiB
+(EngineCore_DP0 pid=1648228) INFO 05-04 11:29:11 [core.py:282] init engine (profile, create kv cache, warmup model) took 100.08 seconds
+INFO 05-04 11:29:12 [llm.py:388] Supported tasks: ['generate']
+[bench_offline] LLM ready in 223.6s
+[bench_offline] warmup: 2 pass(es) of 8 prompts
+[bench_offline] warmup done in 0.65s
+[bench_offline] DONE  bench=1.106s  prompts/s=57.87  prefill_tok/s=12540  avg_prompt_len=217
+[bench_offline] appended row to /scratch/zt1/project/zaoxing-prj/user/jahmad1/results.csv
+
+---------- batch_size=1 : DMI null-mode (vllm-full) ----------
+[bench_offline] start  mode=dmi  model=/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b
+[bench_offline] num_prompts=64  max_num_seqs=1  max_tokens=1  warmups=2
+[bench_offline] hook_selection=vllm-full  null_mode=True  ring_payload_mb=4096  ring_pinned_mb=4096
+[bench_offline] building LLM ...
+INFO 05-04 11:30:48 [utils.py:238] non-default args: {'max_model_len': 4096, 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.85, 'max_num_seqs': 1, 'disable_log_stats': True, 'worker_cls': 'monitoring.vllm_integration.DMXGPUWorker', 'additional_config': {'dmx_hook_selection': 'vllm-full', 'dmx_ring_payload_mb': 4096, 'dmx_ring_pinned_mb': 4096, 'dmx_null_mode': True}, 'model': '/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b'}
+INFO 05-04 11:30:49 [model.py:531] Resolved architecture: Qwen3ForCausalLM
+INFO 05-04 11:30:49 [model.py:1554] Using max model len 4096
+INFO 05-04 11:30:51 [scheduler.py:231] Chunked prefill is enabled with max_num_batched_tokens=4096.
+INFO 05-04 11:30:51 [vllm.py:747] Asynchronous scheduling is enabled.
+(EngineCore_DP0 pid=1649276) INFO 05-04 11:31:11 [core.py:101] Initializing a V1 LLM engine (v0.17.0) with config: model='/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b', speculative_config=None, tokenizer='/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=0, served_model_name=/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [4096], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 2, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': True, 'static_all_moe_layers': []}
+(EngineCore_DP0 pid=1649276) INFO 05-04 11:31:19 [parallel_state.py:1393] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://10.102.35.4:47997 backend=nccl
+(EngineCore_DP0 pid=1649276) INFO 05-04 11:31:19 [parallel_state.py:1715] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(EngineCore_DP0 pid=1649276) INFO 05-04 11:31:21 [base.py:106] Offloader set to NoopOffloader
+(EngineCore_DP0 pid=1649276) INFO 05-04 11:31:25 [gpu_model_runner.py:4281] Starting to load model /scratch/zt1/project/zaoxing-prj/shared/qwen3-4b...
+(EngineCore_DP0 pid=1649276) INFO 05-04 11:31:32 [cuda.py:405] Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].
+(EngineCore_DP0 pid=1649276) INFO 05-04 11:31:32 [flash_attn.py:587] Using FlashAttention version 2
+(EngineCore_DP0 pid=1649276) INFO 05-04 11:31:34 [default_loader.py:293] Loading weights took 1.54 seconds
+(EngineCore_DP0 pid=1649276) INFO 05-04 11:31:35 [gpu_model_runner.py:4364] Model loading took 7.56 GiB memory and 8.446472 seconds
+(EngineCore_DP0 pid=1649276) INFO 05-04 11:32:13 [backends.py:914] vLLM's torch.compile cache is disabled.
+(EngineCore_DP0 pid=1649276) INFO 05-04 11:32:13 [backends.py:976] Dynamo bytecode transform time: 38.12 s
+(EngineCore_DP0 pid=1649276) INFO 05-04 11:33:54 [backends.py:366] Compiling a graph for compile range (1, 4096) takes 99.06 s
+(EngineCore_DP0 pid=1649276) INFO 05-04 11:33:54 [monitor.py:35] torch.compile takes 139.28 s in total
+(EngineCore_DP0 pid=1649276) INFO 05-04 11:33:55 [gpu_worker.py:424] Available KV cache memory: 20.9 GiB
+(EngineCore_DP0 pid=1649276) INFO 05-04 11:33:55 [kv_cache_utils.py:1314] GPU KV cache size: 152,144 tokens
+(EngineCore_DP0 pid=1649276) INFO 05-04 11:33:55 [kv_cache_utils.py:1319] Maximum concurrency for 4,096 tokens per request: 37.14x
+(EngineCore_DP0 pid=1649276) INFO 05-04 11:33:56 [gpu_model_runner.py:5386] Graph capturing finished in 1 secs, took 0.06 GiB
+(EngineCore_DP0 pid=1649276) INFO 05-04 11:33:56 [core.py:282] init engine (profile, create kv cache, warmup model) took 141.41 seconds
+INFO 05-04 11:33:57 [llm.py:388] Supported tasks: ['generate']
+[bench_offline] LLM ready in 202.4s
+[bench_offline] warmup: 2 pass(es) of 8 prompts
+[bench_offline] warmup done in 0.92s
+[bench_offline] DONE  bench=1.349s  prompts/s=47.43  prefill_tok/s=10277  avg_prompt_len=217
+[bench_offline] appended row to /scratch/zt1/project/zaoxing-prj/user/jahmad1/results.csv
+
+---------- batch_size=4 : VANILLA ----------
+[bench_offline] start  mode=vanilla  model=/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b
+[bench_offline] num_prompts=64  max_num_seqs=4  max_tokens=1  warmups=2
+[bench_offline] building LLM ...
+INFO 05-04 11:34:36 [utils.py:238] non-default args: {'max_model_len': 4096, 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.85, 'max_num_seqs': 4, 'disable_log_stats': True, 'model': '/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b'}
+INFO 05-04 11:34:37 [model.py:531] Resolved architecture: Qwen3ForCausalLM
+INFO 05-04 11:34:37 [model.py:1554] Using max model len 4096
+INFO 05-04 11:34:37 [scheduler.py:231] Chunked prefill is enabled with max_num_batched_tokens=8192.
+INFO 05-04 11:34:37 [vllm.py:747] Asynchronous scheduling is enabled.
+(EngineCore_DP0 pid=1650060) INFO 05-04 11:34:48 [core.py:101] Initializing a V1 LLM engine (v0.17.0) with config: model='/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b', speculative_config=None, tokenizer='/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=0, served_model_name=/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 8, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': True, 'static_all_moe_layers': []}
+(EngineCore_DP0 pid=1650060) INFO 05-04 11:34:54 [parallel_state.py:1393] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://10.102.35.4:53775 backend=nccl
+(EngineCore_DP0 pid=1650060) INFO 05-04 11:34:54 [parallel_state.py:1715] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(EngineCore_DP0 pid=1650060) INFO 05-04 11:34:54 [base.py:106] Offloader set to NoopOffloader
+(EngineCore_DP0 pid=1650060) INFO 05-04 11:34:54 [gpu_model_runner.py:4281] Starting to load model /scratch/zt1/project/zaoxing-prj/shared/qwen3-4b...
+(EngineCore_DP0 pid=1650060) INFO 05-04 11:34:57 [cuda.py:405] Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].
+(EngineCore_DP0 pid=1650060) INFO 05-04 11:34:57 [flash_attn.py:587] Using FlashAttention version 2
+(EngineCore_DP0 pid=1650060) INFO 05-04 11:34:59 [default_loader.py:293] Loading weights took 1.15 seconds
+(EngineCore_DP0 pid=1650060) INFO 05-04 11:34:59 [gpu_model_runner.py:4364] Model loading took 7.56 GiB memory and 4.312675 seconds
+(EngineCore_DP0 pid=1650060) INFO 05-04 11:35:12 [backends.py:914] vLLM's torch.compile cache is disabled.
+(EngineCore_DP0 pid=1650060) INFO 05-04 11:35:12 [backends.py:976] Dynamo bytecode transform time: 12.78 s
+(EngineCore_DP0 pid=1650060) INFO 05-04 11:35:24 [backends.py:366] Compiling a graph for compile range (1, 8192) takes 10.23 s
+(EngineCore_DP0 pid=1650060) INFO 05-04 11:35:24 [monitor.py:35] torch.compile takes 24.27 s in total
+(EngineCore_DP0 pid=1650060) INFO 05-04 11:35:25 [gpu_worker.py:424] Available KV cache memory: 24.99 GiB
+(EngineCore_DP0 pid=1650060) INFO 05-04 11:35:25 [kv_cache_utils.py:1314] GPU KV cache size: 181,952 tokens
+(EngineCore_DP0 pid=1650060) INFO 05-04 11:35:25 [kv_cache_utils.py:1319] Maximum concurrency for 4,096 tokens per request: 44.42x
+(EngineCore_DP0 pid=1650060) INFO 05-04 11:35:26 [gpu_model_runner.py:5386] Graph capturing finished in 1 secs, took 0.07 GiB
+(EngineCore_DP0 pid=1650060) INFO 05-04 11:35:26 [core.py:282] init engine (profile, create kv cache, warmup model) took 26.25 seconds
+INFO 05-04 11:35:26 [llm.py:388] Supported tasks: ['generate']
+[bench_offline] LLM ready in 53.1s
+[bench_offline] warmup: 2 pass(es) of 8 prompts
+[bench_offline] warmup done in 0.62s
+[bench_offline] DONE  bench=0.769s  prompts/s=83.25  prefill_tok/s=18040  avg_prompt_len=217
+[bench_offline] appended row to /scratch/zt1/project/zaoxing-prj/user/jahmad1/results.csv
+
+---------- batch_size=4 : DMI null-mode (vllm-full) ----------
+[bench_offline] start  mode=dmi  model=/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b
+[bench_offline] num_prompts=64  max_num_seqs=4  max_tokens=1  warmups=2
+[bench_offline] hook_selection=vllm-full  null_mode=True  ring_payload_mb=4096  ring_pinned_mb=4096
+[bench_offline] building LLM ...
+INFO 05-04 11:36:10 [utils.py:238] non-default args: {'max_model_len': 4096, 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.85, 'max_num_seqs': 4, 'disable_log_stats': True, 'worker_cls': 'monitoring.vllm_integration.DMXGPUWorker', 'additional_config': {'dmx_hook_selection': 'vllm-full', 'dmx_ring_payload_mb': 4096, 'dmx_ring_pinned_mb': 4096, 'dmx_null_mode': True}, 'model': '/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b'}
+INFO 05-04 11:36:10 [model.py:531] Resolved architecture: Qwen3ForCausalLM
+INFO 05-04 11:36:10 [model.py:1554] Using max model len 4096
+INFO 05-04 11:36:11 [scheduler.py:231] Chunked prefill is enabled with max_num_batched_tokens=8192.
+INFO 05-04 11:36:11 [vllm.py:747] Asynchronous scheduling is enabled.
+(EngineCore_DP0 pid=1650513) INFO 05-04 11:36:32 [core.py:101] Initializing a V1 LLM engine (v0.17.0) with config: model='/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b', speculative_config=None, tokenizer='/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=0, served_model_name=/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 8, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': True, 'static_all_moe_layers': []}
+(EngineCore_DP0 pid=1650513) INFO 05-04 11:36:38 [parallel_state.py:1393] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://10.102.35.4:39525 backend=nccl
+(EngineCore_DP0 pid=1650513) INFO 05-04 11:36:38 [parallel_state.py:1715] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(EngineCore_DP0 pid=1650513) INFO 05-04 11:36:39 [base.py:106] Offloader set to NoopOffloader
+(EngineCore_DP0 pid=1650513) INFO 05-04 11:36:43 [gpu_model_runner.py:4281] Starting to load model /scratch/zt1/project/zaoxing-prj/shared/qwen3-4b...
+(EngineCore_DP0 pid=1650513) INFO 05-04 11:36:46 [cuda.py:405] Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].
+(EngineCore_DP0 pid=1650513) INFO 05-04 11:36:46 [flash_attn.py:587] Using FlashAttention version 2
+(EngineCore_DP0 pid=1650513) INFO 05-04 11:36:47 [default_loader.py:293] Loading weights took 1.17 seconds
+(EngineCore_DP0 pid=1650513) INFO 05-04 11:36:48 [gpu_model_runner.py:4364] Model loading took 7.56 GiB memory and 4.205644 seconds
+(EngineCore_DP0 pid=1650513) INFO 05-04 11:37:04 [backends.py:914] vLLM's torch.compile cache is disabled.
+(EngineCore_DP0 pid=1650513) INFO 05-04 11:37:04 [backends.py:976] Dynamo bytecode transform time: 16.03 s
+(EngineCore_DP0 pid=1650513) INFO 05-04 11:38:29 [backends.py:366] Compiling a graph for compile range (1, 8192) takes 83.09 s
+(EngineCore_DP0 pid=1650513) INFO 05-04 11:38:29 [monitor.py:35] torch.compile takes 101.17 s in total
+(EngineCore_DP0 pid=1650513) INFO 05-04 11:38:30 [gpu_worker.py:424] Available KV cache memory: 20.86 GiB
+(EngineCore_DP0 pid=1650513) INFO 05-04 11:38:30 [kv_cache_utils.py:1314] GPU KV cache size: 151,856 tokens
+(EngineCore_DP0 pid=1650513) INFO 05-04 11:38:30 [kv_cache_utils.py:1319] Maximum concurrency for 4,096 tokens per request: 37.07x
+(EngineCore_DP0 pid=1650513) INFO 05-04 11:38:31 [gpu_model_runner.py:5386] Graph capturing finished in 1 secs, took 0.09 GiB
+(EngineCore_DP0 pid=1650513) INFO 05-04 11:38:31 [core.py:282] init engine (profile, create kv cache, warmup model) took 103.38 seconds
+INFO 05-04 11:38:32 [llm.py:388] Supported tasks: ['generate']
+[bench_offline] LLM ready in 145.9s
+[bench_offline] warmup: 2 pass(es) of 8 prompts
+[bench_offline] warmup done in 0.67s
+[bench_offline] DONE  bench=0.805s  prompts/s=79.52  prefill_tok/s=17232  avg_prompt_len=217
+[bench_offline] appended row to /scratch/zt1/project/zaoxing-prj/user/jahmad1/results.csv
+
+---------- batch_size=8 : VANILLA ----------
+[bench_offline] start  mode=vanilla  model=/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b
+[bench_offline] num_prompts=64  max_num_seqs=8  max_tokens=1  warmups=2
+[bench_offline] building LLM ...
+INFO 05-04 11:39:21 [utils.py:238] non-default args: {'max_model_len': 4096, 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.85, 'max_num_seqs': 8, 'disable_log_stats': True, 'model': '/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b'}
+INFO 05-04 11:39:21 [model.py:531] Resolved architecture: Qwen3ForCausalLM
+INFO 05-04 11:39:21 [model.py:1554] Using max model len 4096
+INFO 05-04 11:39:22 [scheduler.py:231] Chunked prefill is enabled with max_num_batched_tokens=8192.
+INFO 05-04 11:39:22 [vllm.py:747] Asynchronous scheduling is enabled.
+(EngineCore_DP0 pid=1651180) INFO 05-04 11:39:36 [core.py:101] Initializing a V1 LLM engine (v0.17.0) with config: model='/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b', speculative_config=None, tokenizer='/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=0, served_model_name=/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 16, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': True, 'static_all_moe_layers': []}
+(EngineCore_DP0 pid=1651180) INFO 05-04 11:39:41 [parallel_state.py:1393] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://10.102.35.4:43225 backend=nccl
+(EngineCore_DP0 pid=1651180) INFO 05-04 11:39:41 [parallel_state.py:1715] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(EngineCore_DP0 pid=1651180) INFO 05-04 11:39:42 [base.py:106] Offloader set to NoopOffloader
+(EngineCore_DP0 pid=1651180) INFO 05-04 11:39:42 [gpu_model_runner.py:4281] Starting to load model /scratch/zt1/project/zaoxing-prj/shared/qwen3-4b...
+(EngineCore_DP0 pid=1651180) INFO 05-04 11:39:46 [cuda.py:405] Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].
+(EngineCore_DP0 pid=1651180) INFO 05-04 11:39:46 [flash_attn.py:587] Using FlashAttention version 2
+(EngineCore_DP0 pid=1651180) INFO 05-04 11:39:48 [default_loader.py:293] Loading weights took 1.16 seconds
+(EngineCore_DP0 pid=1651180) INFO 05-04 11:39:48 [gpu_model_runner.py:4364] Model loading took 7.56 GiB memory and 5.773249 seconds
+(EngineCore_DP0 pid=1651180) INFO 05-04 11:40:05 [backends.py:914] vLLM's torch.compile cache is disabled.
+(EngineCore_DP0 pid=1651180) INFO 05-04 11:40:05 [backends.py:976] Dynamo bytecode transform time: 16.71 s
+(EngineCore_DP0 pid=1651180) INFO 05-04 11:40:11 [backends.py:366] Compiling a graph for compile range (1, 8192) takes 3.91 s
+(EngineCore_DP0 pid=1651180) INFO 05-04 11:40:11 [monitor.py:35] torch.compile takes 21.94 s in total
+(EngineCore_DP0 pid=1651180) INFO 05-04 11:40:24 [gpu_worker.py:424] Available KV cache memory: 25.19 GiB
+(EngineCore_DP0 pid=1651180) INFO 05-04 11:40:24 [kv_cache_utils.py:1314] GPU KV cache size: 183,440 tokens
+(EngineCore_DP0 pid=1651180) INFO 05-04 11:40:24 [kv_cache_utils.py:1319] Maximum concurrency for 4,096 tokens per request: 44.79x
+(EngineCore_DP0 pid=1651180) INFO 05-04 11:40:25 [gpu_model_runner.py:5386] Graph capturing finished in 1 secs, took 0.08 GiB
+(EngineCore_DP0 pid=1651180) INFO 05-04 11:40:25 [core.py:282] init engine (profile, create kv cache, warmup model) took 36.05 seconds
+INFO 05-04 11:40:25 [llm.py:388] Supported tasks: ['generate']
+[bench_offline] LLM ready in 68.4s
+[bench_offline] warmup: 2 pass(es) of 8 prompts
+[bench_offline] warmup done in 0.30s
+[bench_offline] DONE  bench=0.633s  prompts/s=101.06  prefill_tok/s=21899  avg_prompt_len=217
+[bench_offline] appended row to /scratch/zt1/project/zaoxing-prj/user/jahmad1/results.csv
+
+---------- batch_size=8 : DMI null-mode (vllm-full) ----------
+[bench_offline] start  mode=dmi  model=/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b
+[bench_offline] num_prompts=64  max_num_seqs=8  max_tokens=1  warmups=2
+[bench_offline] hook_selection=vllm-full  null_mode=True  ring_payload_mb=4096  ring_pinned_mb=4096
+[bench_offline] building LLM ...
+INFO 05-04 11:41:05 [utils.py:238] non-default args: {'max_model_len': 4096, 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.85, 'max_num_seqs': 8, 'disable_log_stats': True, 'worker_cls': 'monitoring.vllm_integration.DMXGPUWorker', 'additional_config': {'dmx_hook_selection': 'vllm-full', 'dmx_ring_payload_mb': 4096, 'dmx_ring_pinned_mb': 4096, 'dmx_null_mode': True}, 'model': '/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b'}
+INFO 05-04 11:41:05 [model.py:531] Resolved architecture: Qwen3ForCausalLM
+INFO 05-04 11:41:05 [model.py:1554] Using max model len 4096
+INFO 05-04 11:41:06 [scheduler.py:231] Chunked prefill is enabled with max_num_batched_tokens=8192.
+INFO 05-04 11:41:06 [vllm.py:747] Asynchronous scheduling is enabled.
+(EngineCore_DP0 pid=1651554) INFO 05-04 11:41:20 [core.py:101] Initializing a V1 LLM engine (v0.17.0) with config: model='/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b', speculative_config=None, tokenizer='/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=0, served_model_name=/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 16, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': True, 'static_all_moe_layers': []}
+(EngineCore_DP0 pid=1651554) INFO 05-04 11:41:25 [parallel_state.py:1393] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://10.102.35.4:47687 backend=nccl
+(EngineCore_DP0 pid=1651554) INFO 05-04 11:41:25 [parallel_state.py:1715] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(EngineCore_DP0 pid=1651554) INFO 05-04 11:41:25 [base.py:106] Offloader set to NoopOffloader
+(EngineCore_DP0 pid=1651554) INFO 05-04 11:41:28 [gpu_model_runner.py:4281] Starting to load model /scratch/zt1/project/zaoxing-prj/shared/qwen3-4b...
+(EngineCore_DP0 pid=1651554) INFO 05-04 11:41:30 [cuda.py:405] Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].
+(EngineCore_DP0 pid=1651554) INFO 05-04 11:41:30 [flash_attn.py:587] Using FlashAttention version 2
+(EngineCore_DP0 pid=1651554) INFO 05-04 11:41:32 [default_loader.py:293] Loading weights took 1.17 seconds
+(EngineCore_DP0 pid=1651554) INFO 05-04 11:41:32 [gpu_model_runner.py:4364] Model loading took 7.56 GiB memory and 3.153619 seconds
+(EngineCore_DP0 pid=1651554) INFO 05-04 11:41:47 [backends.py:914] vLLM's torch.compile cache is disabled.
+(EngineCore_DP0 pid=1651554) INFO 05-04 11:41:47 [backends.py:976] Dynamo bytecode transform time: 14.78 s
+(EngineCore_DP0 pid=1651554) INFO 05-04 11:42:43 [backends.py:366] Compiling a graph for compile range (1, 8192) takes 53.39 s
+(EngineCore_DP0 pid=1651554) INFO 05-04 11:42:43 [monitor.py:35] torch.compile takes 70.31 s in total
+(EngineCore_DP0 pid=1651554) INFO 05-04 11:42:44 [gpu_worker.py:424] Available KV cache memory: 20.85 GiB
+(EngineCore_DP0 pid=1651554) INFO 05-04 11:42:44 [kv_cache_utils.py:1314] GPU KV cache size: 151,824 tokens
+(EngineCore_DP0 pid=1651554) INFO 05-04 11:42:44 [kv_cache_utils.py:1319] Maximum concurrency for 4,096 tokens per request: 37.07x
+(EngineCore_DP0 pid=1651554) INFO 05-04 11:42:45 [gpu_model_runner.py:5386] Graph capturing finished in 1 secs, took 0.11 GiB
+(EngineCore_DP0 pid=1651554) INFO 05-04 11:42:45 [core.py:282] init engine (profile, create kv cache, warmup model) took 72.61 seconds
+INFO 05-04 11:42:46 [llm.py:388] Supported tasks: ['generate']
+[bench_offline] LLM ready in 104.7s
+[bench_offline] warmup: 2 pass(es) of 8 prompts
+[bench_offline] warmup done in 0.30s
+[bench_offline] DONE  bench=0.629s  prompts/s=101.73  prefill_tok/s=22044  avg_prompt_len=217
+[bench_offline] appended row to /scratch/zt1/project/zaoxing-prj/user/jahmad1/results.csv
+
+---------- batch_size=16 : VANILLA ----------
+[bench_offline] start  mode=vanilla  model=/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b
+[bench_offline] num_prompts=64  max_num_seqs=16  max_tokens=1  warmups=2
+[bench_offline] building LLM ...
+INFO 05-04 11:43:36 [utils.py:238] non-default args: {'max_model_len': 4096, 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.85, 'max_num_seqs': 16, 'disable_log_stats': True, 'model': '/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b'}
+INFO 05-04 11:43:36 [model.py:531] Resolved architecture: Qwen3ForCausalLM
+INFO 05-04 11:43:36 [model.py:1554] Using max model len 4096
+INFO 05-04 11:43:37 [scheduler.py:231] Chunked prefill is enabled with max_num_batched_tokens=8192.
+INFO 05-04 11:43:37 [vllm.py:747] Asynchronous scheduling is enabled.
+(EngineCore_DP0 pid=1652227) INFO 05-04 11:43:55 [core.py:101] Initializing a V1 LLM engine (v0.17.0) with config: model='/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b', speculative_config=None, tokenizer='/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=0, served_model_name=/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 32, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': True, 'static_all_moe_layers': []}
+(EngineCore_DP0 pid=1652227) INFO 05-04 11:44:00 [parallel_state.py:1393] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://10.102.35.4:56409 backend=nccl
+(EngineCore_DP0 pid=1652227) INFO 05-04 11:44:00 [parallel_state.py:1715] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(EngineCore_DP0 pid=1652227) INFO 05-04 11:44:01 [base.py:106] Offloader set to NoopOffloader
+(EngineCore_DP0 pid=1652227) INFO 05-04 11:44:01 [gpu_model_runner.py:4281] Starting to load model /scratch/zt1/project/zaoxing-prj/shared/qwen3-4b...
+(EngineCore_DP0 pid=1652227) INFO 05-04 11:44:06 [cuda.py:405] Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].
+(EngineCore_DP0 pid=1652227) INFO 05-04 11:44:06 [flash_attn.py:587] Using FlashAttention version 2
+(EngineCore_DP0 pid=1652227) INFO 05-04 11:44:08 [default_loader.py:293] Loading weights took 1.17 seconds
+(EngineCore_DP0 pid=1652227) INFO 05-04 11:44:09 [gpu_model_runner.py:4364] Model loading took 7.56 GiB memory and 6.879656 seconds
+(EngineCore_DP0 pid=1652227) INFO 05-04 11:44:24 [backends.py:914] vLLM's torch.compile cache is disabled.
+(EngineCore_DP0 pid=1652227) INFO 05-04 11:44:24 [backends.py:976] Dynamo bytecode transform time: 15.17 s
+(EngineCore_DP0 pid=1652227) INFO 05-04 11:44:30 [backends.py:366] Compiling a graph for compile range (1, 8192) takes 4.54 s
+(EngineCore_DP0 pid=1652227) INFO 05-04 11:44:30 [monitor.py:35] torch.compile takes 20.98 s in total
+(EngineCore_DP0 pid=1652227) INFO 05-04 11:44:38 [gpu_worker.py:424] Available KV cache memory: 25.19 GiB
+(EngineCore_DP0 pid=1652227) INFO 05-04 11:44:38 [kv_cache_utils.py:1314] GPU KV cache size: 183,440 tokens
+(EngineCore_DP0 pid=1652227) INFO 05-04 11:44:38 [kv_cache_utils.py:1319] Maximum concurrency for 4,096 tokens per request: 44.79x
+(EngineCore_DP0 pid=1652227) INFO 05-04 11:44:39 [gpu_model_runner.py:5386] Graph capturing finished in 1 secs, took 0.11 GiB
+(EngineCore_DP0 pid=1652227) INFO 05-04 11:44:39 [core.py:282] init engine (profile, create kv cache, warmup model) took 30.32 seconds
+INFO 05-04 11:44:40 [llm.py:388] Supported tasks: ['generate']
+[bench_offline] LLM ready in 69.6s
+[bench_offline] warmup: 2 pass(es) of 16 prompts
+[bench_offline] warmup done in 0.50s
+[bench_offline] DONE  bench=0.561s  prompts/s=114.13  prefill_tok/s=24730  avg_prompt_len=217
+[bench_offline] appended row to /scratch/zt1/project/zaoxing-prj/user/jahmad1/results.csv
+
+---------- batch_size=16 : DMI null-mode (vllm-full) ----------
+[bench_offline] start  mode=dmi  model=/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b
+[bench_offline] num_prompts=64  max_num_seqs=16  max_tokens=1  warmups=2
+[bench_offline] hook_selection=vllm-full  null_mode=True  ring_payload_mb=4096  ring_pinned_mb=4096
+[bench_offline] building LLM ...
+INFO 05-04 11:45:35 [utils.py:238] non-default args: {'max_model_len': 4096, 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.85, 'max_num_seqs': 16, 'disable_log_stats': True, 'worker_cls': 'monitoring.vllm_integration.DMXGPUWorker', 'additional_config': {'dmx_hook_selection': 'vllm-full', 'dmx_ring_payload_mb': 4096, 'dmx_ring_pinned_mb': 4096, 'dmx_null_mode': True}, 'model': '/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b'}
+INFO 05-04 11:45:35 [model.py:531] Resolved architecture: Qwen3ForCausalLM
+INFO 05-04 11:45:35 [model.py:1554] Using max model len 4096
+INFO 05-04 11:45:36 [scheduler.py:231] Chunked prefill is enabled with max_num_batched_tokens=8192.
+INFO 05-04 11:45:36 [vllm.py:747] Asynchronous scheduling is enabled.
+(EngineCore_DP0 pid=1652614) INFO 05-04 11:45:56 [core.py:101] Initializing a V1 LLM engine (v0.17.0) with config: model='/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b', speculative_config=None, tokenizer='/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=0, served_model_name=/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 32, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': True, 'static_all_moe_layers': []}
+(EngineCore_DP0 pid=1652614) INFO 05-04 11:46:03 [parallel_state.py:1393] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://10.102.35.4:53821 backend=nccl
+(EngineCore_DP0 pid=1652614) INFO 05-04 11:46:03 [parallel_state.py:1715] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(EngineCore_DP0 pid=1652614) INFO 05-04 11:46:04 [base.py:106] Offloader set to NoopOffloader
+(EngineCore_DP0 pid=1652614) INFO 05-04 11:46:08 [gpu_model_runner.py:4281] Starting to load model /scratch/zt1/project/zaoxing-prj/shared/qwen3-4b...
+(EngineCore_DP0 pid=1652614) INFO 05-04 11:46:11 [cuda.py:405] Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].
+(EngineCore_DP0 pid=1652614) INFO 05-04 11:46:11 [flash_attn.py:587] Using FlashAttention version 2
+(EngineCore_DP0 pid=1652614) INFO 05-04 11:46:13 [default_loader.py:293] Loading weights took 1.18 seconds
+(EngineCore_DP0 pid=1652614) INFO 05-04 11:46:14 [gpu_model_runner.py:4364] Model loading took 7.56 GiB memory and 5.063433 seconds
+(EngineCore_DP0 pid=1652614) INFO 05-04 11:46:33 [backends.py:914] vLLM's torch.compile cache is disabled.
+(EngineCore_DP0 pid=1652614) INFO 05-04 11:46:33 [backends.py:976] Dynamo bytecode transform time: 18.98 s
+(EngineCore_DP0 pid=1652614) INFO 05-04 11:47:29 [backends.py:366] Compiling a graph for compile range (1, 8192) takes 53.60 s
+(EngineCore_DP0 pid=1652614) INFO 05-04 11:47:29 [monitor.py:35] torch.compile takes 74.65 s in total
+(EngineCore_DP0 pid=1652614) INFO 05-04 11:47:30 [gpu_worker.py:424] Available KV cache memory: 20.85 GiB
+(EngineCore_DP0 pid=1652614) INFO 05-04 11:47:30 [kv_cache_utils.py:1314] GPU KV cache size: 151,824 tokens
+(EngineCore_DP0 pid=1652614) INFO 05-04 11:47:30 [kv_cache_utils.py:1319] Maximum concurrency for 4,096 tokens per request: 37.07x
+(EngineCore_DP0 pid=1652614) INFO 05-04 11:47:31 [gpu_model_runner.py:5386] Graph capturing finished in 1 secs, took 0.16 GiB
+(EngineCore_DP0 pid=1652614) INFO 05-04 11:47:31 [core.py:282] init engine (profile, create kv cache, warmup model) took 77.16 seconds
+INFO 05-04 11:47:32 [llm.py:388] Supported tasks: ['generate']
+[bench_offline] LLM ready in 121.5s
+[bench_offline] warmup: 2 pass(es) of 16 prompts
+[bench_offline] warmup done in 0.45s
+[bench_offline] DONE  bench=0.568s  prompts/s=112.67  prefill_tok/s=24415  avg_prompt_len=217
+[bench_offline] appended row to /scratch/zt1/project/zaoxing-prj/user/jahmad1/results.csv
+
+---------- batch_size=32 : VANILLA ----------
+[bench_offline] start  mode=vanilla  model=/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b
+[bench_offline] num_prompts=64  max_num_seqs=32  max_tokens=1  warmups=2
+[bench_offline] building LLM ...
+INFO 05-04 11:48:17 [utils.py:238] non-default args: {'max_model_len': 4096, 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.85, 'max_num_seqs': 32, 'disable_log_stats': True, 'model': '/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b'}
+INFO 05-04 11:48:17 [model.py:531] Resolved architecture: Qwen3ForCausalLM
+INFO 05-04 11:48:17 [model.py:1554] Using max model len 4096
+INFO 05-04 11:48:18 [scheduler.py:231] Chunked prefill is enabled with max_num_batched_tokens=8192.
+INFO 05-04 11:48:18 [vllm.py:747] Asynchronous scheduling is enabled.
+(EngineCore_DP0 pid=1653234) INFO 05-04 11:48:30 [core.py:101] Initializing a V1 LLM engine (v0.17.0) with config: model='/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b', speculative_config=None, tokenizer='/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=0, served_model_name=/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 64, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': True, 'static_all_moe_layers': []}
+(EngineCore_DP0 pid=1653234) INFO 05-04 11:48:35 [parallel_state.py:1393] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://10.102.35.4:54357 backend=nccl
+(EngineCore_DP0 pid=1653234) INFO 05-04 11:48:35 [parallel_state.py:1715] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(EngineCore_DP0 pid=1653234) INFO 05-04 11:48:36 [base.py:106] Offloader set to NoopOffloader
+(EngineCore_DP0 pid=1653234) INFO 05-04 11:48:36 [gpu_model_runner.py:4281] Starting to load model /scratch/zt1/project/zaoxing-prj/shared/qwen3-4b...
+(EngineCore_DP0 pid=1653234) INFO 05-04 11:48:40 [cuda.py:405] Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].
+(EngineCore_DP0 pid=1653234) INFO 05-04 11:48:40 [flash_attn.py:587] Using FlashAttention version 2
+(EngineCore_DP0 pid=1653234) INFO 05-04 11:48:41 [default_loader.py:293] Loading weights took 1.16 seconds
+(EngineCore_DP0 pid=1653234) INFO 05-04 11:48:42 [gpu_model_runner.py:4364] Model loading took 7.56 GiB memory and 5.389980 seconds
+(EngineCore_DP0 pid=1653234) INFO 05-04 11:48:55 [backends.py:914] vLLM's torch.compile cache is disabled.
+(EngineCore_DP0 pid=1653234) INFO 05-04 11:48:55 [backends.py:976] Dynamo bytecode transform time: 13.39 s
+(EngineCore_DP0 pid=1653234) INFO 05-04 11:49:03 [backends.py:366] Compiling a graph for compile range (1, 8192) takes 6.81 s
+(EngineCore_DP0 pid=1653234) INFO 05-04 11:49:03 [monitor.py:35] torch.compile takes 21.47 s in total
+(EngineCore_DP0 pid=1653234) INFO 05-04 11:49:04 [gpu_worker.py:424] Available KV cache memory: 25.19 GiB
+(EngineCore_DP0 pid=1653234) INFO 05-04 11:49:04 [kv_cache_utils.py:1314] GPU KV cache size: 183,440 tokens
+(EngineCore_DP0 pid=1653234) INFO 05-04 11:49:04 [kv_cache_utils.py:1319] Maximum concurrency for 4,096 tokens per request: 44.79x
+(EngineCore_DP0 pid=1653234) INFO 05-04 11:49:05 [gpu_model_runner.py:5386] Graph capturing finished in 1 secs, took 0.15 GiB
+(EngineCore_DP0 pid=1653234) INFO 05-04 11:49:05 [core.py:282] init engine (profile, create kv cache, warmup model) took 23.71 seconds
+INFO 05-04 11:49:06 [llm.py:388] Supported tasks: ['generate']
+[bench_offline] LLM ready in 52.1s
+[bench_offline] warmup: 2 pass(es) of 32 prompts
+[bench_offline] warmup done in 0.67s
+[bench_offline] DONE  bench=0.536s  prompts/s=119.45  prefill_tok/s=25883  avg_prompt_len=217
+[bench_offline] appended row to /scratch/zt1/project/zaoxing-prj/user/jahmad1/results.csv
+
+---------- batch_size=32 : DMI null-mode (vllm-full) ----------
+[bench_offline] start  mode=dmi  model=/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b
+[bench_offline] num_prompts=64  max_num_seqs=32  max_tokens=1  warmups=2
+[bench_offline] hook_selection=vllm-full  null_mode=True  ring_payload_mb=4096  ring_pinned_mb=4096
+[bench_offline] building LLM ...
+INFO 05-04 11:49:43 [utils.py:238] non-default args: {'max_model_len': 4096, 'enable_prefix_caching': False, 'gpu_memory_utilization': 0.85, 'max_num_seqs': 32, 'disable_log_stats': True, 'worker_cls': 'monitoring.vllm_integration.DMXGPUWorker', 'additional_config': {'dmx_hook_selection': 'vllm-full', 'dmx_ring_payload_mb': 4096, 'dmx_ring_pinned_mb': 4096, 'dmx_null_mode': True}, 'model': '/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b'}
+INFO 05-04 11:49:43 [model.py:531] Resolved architecture: Qwen3ForCausalLM
+INFO 05-04 11:49:43 [model.py:1554] Using max model len 4096
+INFO 05-04 11:49:44 [scheduler.py:231] Chunked prefill is enabled with max_num_batched_tokens=8192.
+INFO 05-04 11:49:44 [vllm.py:747] Asynchronous scheduling is enabled.
+(EngineCore_DP0 pid=1653522) INFO 05-04 11:49:56 [core.py:101] Initializing a V1 LLM engine (v0.17.0) with config: model='/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b', speculative_config=None, tokenizer='/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=4096, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_fallback=False, disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=0, served_model_name=/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'level': None, 'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'compile_sizes': [], 'compile_ranges_split_points': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 64, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': True, 'static_all_moe_layers': []}
+(EngineCore_DP0 pid=1653522) INFO 05-04 11:50:01 [parallel_state.py:1393] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://10.102.35.4:49299 backend=nccl
+(EngineCore_DP0 pid=1653522) INFO 05-04 11:50:01 [parallel_state.py:1715] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(EngineCore_DP0 pid=1653522) INFO 05-04 11:50:02 [base.py:106] Offloader set to NoopOffloader
+(EngineCore_DP0 pid=1653522) INFO 05-04 11:50:07 [gpu_model_runner.py:4281] Starting to load model /scratch/zt1/project/zaoxing-prj/shared/qwen3-4b...
+(EngineCore_DP0 pid=1653522) INFO 05-04 11:50:14 [cuda.py:405] Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].
+(EngineCore_DP0 pid=1653522) INFO 05-04 11:50:14 [flash_attn.py:587] Using FlashAttention version 2
+(EngineCore_DP0 pid=1653522) INFO 05-04 11:50:17 [default_loader.py:293] Loading weights took 1.17 seconds
+(EngineCore_DP0 pid=1653522) INFO 05-04 11:50:17 [gpu_model_runner.py:4364] Model loading took 7.56 GiB memory and 9.002726 seconds
+(EngineCore_DP0 pid=1653522) INFO 05-04 11:50:41 [backends.py:914] vLLM's torch.compile cache is disabled.
+(EngineCore_DP0 pid=1653522) INFO 05-04 11:50:41 [backends.py:976] Dynamo bytecode transform time: 23.71 s
+(EngineCore_DP0 pid=1653522) INFO 05-04 11:51:38 [backends.py:366] Compiling a graph for compile range (1, 8192) takes 54.69 s
+(EngineCore_DP0 pid=1653522) INFO 05-04 11:51:38 [monitor.py:35] torch.compile takes 80.47 s in total
+(EngineCore_DP0 pid=1653522) INFO 05-04 11:51:39 [gpu_worker.py:424] Available KV cache memory: 20.85 GiB
+(EngineCore_DP0 pid=1653522) INFO 05-04 11:51:39 [kv_cache_utils.py:1314] GPU KV cache size: 151,824 tokens
+(EngineCore_DP0 pid=1653522) INFO 05-04 11:51:39 [kv_cache_utils.py:1319] Maximum concurrency for 4,096 tokens per request: 37.07x
+(EngineCore_DP0 pid=1653522) INFO 05-04 11:51:40 [gpu_model_runner.py:5386] Graph capturing finished in 2 secs, took 0.21 GiB
+(EngineCore_DP0 pid=1653522) INFO 05-04 11:51:40 [core.py:282] init engine (profile, create kv cache, warmup model) took 83.41 seconds
+INFO 05-04 11:51:41 [llm.py:388] Supported tasks: ['generate']
+[bench_offline] LLM ready in 121.5s
+[bench_offline] warmup: 2 pass(es) of 32 prompts
+[bench_offline] warmup done in 0.69s
+[bench_offline] DONE  bench=0.522s  prompts/s=122.57  prefill_tok/s=26559  avg_prompt_len=217
+[bench_offline] appended row to /scratch/zt1/project/zaoxing-prj/user/jahmad1/results.csv
+
+========== Sweep complete: Mon May  4 11:51:48 EDT 2026 ==========
+Results CSV: /home/jahmad1/scratch.zaoxing-prj/results.csv
+Final 12 rows:
+2026-05-03T21:18:24,vanilla,sweep_bs1,/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b,64,1,1,,,auto,1,42,4096,2,331.11,0.403,1.124,13868,64,216.7,56.944,12339.1
+2026-05-04T10:19:45,vanilla,sweep_bs1,/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b,64,1,1,,,auto,1,42,4096,2,221.86,0.388,1.090,13868,64,216.7,58.702,12719.9
+2026-05-04T11:29:16,vanilla,sweep_bs1,/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b,64,1,1,,,auto,1,42,4096,2,223.57,0.649,1.106,13868,64,216.7,57.871,12540.0
+2026-05-04T11:34:03,dmi,sweep_bs1,/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b,64,1,1,vllm-full,True,auto,1,42,4096,2,202.36,0.918,1.349,13868,64,216.7,47.426,10276.7
+2026-05-04T11:35:30,vanilla,sweep_bs4,/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b,64,4,1,,,auto,1,42,4096,2,53.10,0.624,0.769,13868,64,216.7,83.252,18039.7
+2026-05-04T11:38:37,dmi,sweep_bs4,/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b,64,4,1,vllm-full,True,auto,1,42,4096,2,145.90,0.669,0.805,13868,64,216.7,79.524,17231.9
+2026-05-04T11:40:29,vanilla,sweep_bs8,/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b,64,8,1,,,auto,1,42,4096,2,68.43,0.299,0.633,13868,64,216.7,101.063,21899.1
+2026-05-04T11:42:50,dmi,sweep_bs8,/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b,64,8,1,vllm-full,True,auto,1,42,4096,2,104.71,0.301,0.629,13868,64,216.7,101.732,22044.0
+2026-05-04T11:44:44,vanilla,sweep_bs16,/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b,64,16,1,,,auto,1,42,4096,2,69.59,0.502,0.561,13868,64,216.7,114.126,24729.8
+2026-05-04T11:47:36,dmi,sweep_bs16,/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b,64,16,1,vllm-full,True,auto,1,42,4096,2,121.46,0.452,0.568,13868,64,216.7,112.673,24414.8
+2026-05-04T11:49:10,vanilla,sweep_bs32,/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b,64,32,1,,,auto,1,42,4096,2,52.10,0.667,0.536,13868,64,216.7,119.450,25883.3
+2026-05-04T11:51:46,dmi,sweep_bs32,/scratch/zt1/project/zaoxing-prj/shared/qwen3-4b,64,32,1,vllm-full,True,auto,1,42,4096,2,121.46,0.690,0.522,13868,64,216.7,122.567,26558.8
