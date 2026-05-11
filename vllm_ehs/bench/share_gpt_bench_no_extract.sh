@@ -1,12 +1,11 @@
 #!/bin/bash
-# Result CSV:    ~/scratch.zaoxing-prj/results.csv (appended each invocation)
 #
 # Per CLAUDE.md decisions:
 #   - Model:           Qwen3-4B
 #   - max_tokens:      1 (apples-to-apples for vLLM-extract's prompt-only capture)
 #   - Batch size sweep: {1, 4, 8, 16, 32}
 
-#SBATCH --job-name=dmi-bench
+#SBATCH --job-name=share-gpt-bench-no-extract
 #SBATCH --partition=gpu-a100
 #SBATCH --gres=gpu:a100:1
 #SBATCH --time=12:00:00
