@@ -1,12 +1,11 @@
 #!/bin/bash
-# Result CSV:    ~/scratch.zaoxing-prj/results.csv (appended each invocation)
 #
 # Per CLAUDE.md decisions:
 #   - Model:           Qwen3-4B
 #   - max_tokens:      1 (apples-to-apples for vLLM-extract's prompt-only capture)
 #   - Batch size sweep: {1, 4, 8, 16, 32}
 
-#SBATCH --job-name=dmi-bench
+#SBATCH --job-name=share-gpt-bench-no-write
 #SBATCH --partition=gpu-a100
 #SBATCH --gres=gpu:a100:1
 #SBATCH --time=12:00:00
@@ -16,7 +15,7 @@
 #SBATCH --error=bench-%j.err
 
 set -euo pipefail
-
+    
 echo "=== node: $(hostname)  job: ${SLURM_JOB_ID:-local}  start: $(date) ==="
 
 # ── Toolchain ───────────────────────────────────────────────────────
@@ -63,7 +62,7 @@ do
             --gpu-memory-utilization 0.85 \
             --output-csv "$RESULTS" \
             --tag "sweep_bs${bs}" \
-            --write-to-disk False
+            --no-write
 
         echo
     done
